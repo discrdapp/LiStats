@@ -64,6 +64,8 @@ Aplikacja korzysta z backendu:
 
 Endpoint zwraca dane gracza oraz jego statystyki FACEIT w formacie JSON
 
+[Kod do backendu](https://github.com/discrdapp/LiStats-backend/tree/main)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
