@@ -5,8 +5,9 @@
 
 Aplikacja umożliwia szybkie wyszukanie gracza, analizę jego statystyk oraz porównywanie wielu profili w jednej tabeli.
 
+---
 
-## 🚀 Funkcjonalności
+# 🚀 Funkcjonalności
 
 ### 🔎 Wyszukiwanie gracza po SteamID64
 
@@ -38,7 +39,9 @@ Aplikacja umożliwia szybkie wyszukanie gracza, analizę jego statystyk oraz por
 
 ### 📱 Responsywny layout (Bootstrap 5)
 
-## 🛠 Technologie
+---
+
+# 🛠 Technologie
 
 - HTML5
 
@@ -56,7 +59,9 @@ Aplikacja umożliwia szybkie wyszukanie gracza, analizę jego statystyk oraz por
 
 - jQuery Validate
 
-## 🌐 API
+---
+
+# 🌐 API
 
 Aplikacja korzysta z backendu:
 
@@ -64,7 +69,13 @@ Aplikacja korzysta z backendu:
 
 Endpoint zwraca dane gracza oraz jego statystyki FACEIT w formacie JSON
 
-[Kod do backendu](https://github.com/discrdapp/LiStats-backend/tree/main)
+---
+
+# Repozytorium backend
+
+[LiStats Backend](https://github.com/discrdapp/LiStats-backend/)
+
+---
 
 ## License
 
