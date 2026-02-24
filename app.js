@@ -59,7 +59,7 @@ $(document).ready(function () {
 		$('#loader').show()
 
 		$.ajax({
-			url: `/api/stats/${id}`,
+			url: `https://listats-backend.onrender.com/api/stats/${id}`,
 			method: 'GET',
 			success: function (data) {
 				currentData = data
@@ -217,3 +217,4 @@ $(document).ready(function () {
 		}
 	})
 })
+
