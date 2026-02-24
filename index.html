@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiStats | Porównaj Staty FACEIT</title>
+    <link rel="shortcut icon" href="logo-dark-small.png" type="image/png" id="favicon">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="top-bar">
+            <img src="logo-dark.png" alt="LiStatsLogo" id="logo">
+            <button id="themeToggle" class="theme-btn" title="Zmień motyw">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="search-container text-center">
+            <h1 class="mb-4">Sprawdź Gracza</h1>
+            <form id="searchForm">
+                <div class="input-group">
+                    <input type="text" name="steamid" id="steamid" class="form-control"
+                        placeholder="Wklej SteamID64 (np. 76561198346881153)" list="idExamples">
+                    <datalist id="idExamples">
+                        <option value="76561198346881153">
+                        <option value="76561198983693375">
+                        <option value="76561199141832983">
+                        <option value="76561198436545478">
+                        <option value="76561199221120342">
+                        <option value="76561198152302355">
+                        <option value="https://steamcommunity.com/profiles/76561198346881153/">
+                    </datalist>
+                    <button class="btn btn-warning fw-bold px-4" type="submit">SZUKAJ</button>
+                </div>
+                <div id="error-placeholder" class="text-start"></div>
+            </form>
+            <div class="loader" id="loader"></div>
+        </div>
+
+        <div id="profile-card" class="stat-card shadow">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="d-flex align-items-center mb-4 position-relative">
+                        <img id="p-avatar" src="" width="80" class="rounded me-3 border border-2 border-secondary">
+                        <div>
+                            <h2 id="p-nick" class="m-0">Nick</h2>
+                            <div class="p-lvl-wrapper">
+                                <span class="lvl-badge" id="p-lvl">
+                                    <div class="insidelvl"></div>
+                                </span>
+                                <span class="ms-2 fw-bold mt-2" style="font-family:'Rajdhani'" id="p-elo-wrapper">ELO:
+                                    <span id="p-elo">2500</span></span>
+                            </div>
+
+                        </div>
+                        <div class="p-socials">
+                            <a href="https://steamcommunity.com/profiles/76561198346881153/" target="_blank"
+                                class="p-socials-wrapper" id="p-socials-steam">
+                                <img src="steam.png" alt="steamLogo" class="p-socials-img">
+                            </a>
+                            <a href="https://steamcommunity.com/profiles/76561198346881153/" target="_blank"
+                                class="p-socials-wrapper" id="p-socials-faceit">
+                                <img src="faceit.png" alt="faceitLogo" class="p-socials-img faceit">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">K/D RATIO</div>
+                                <div class="stat-value" id="p-kd">0.00</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">ADR</div>
+                                <div class="stat-value text-warning" id="p-adr">0</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">WINRATE</div>
+                                <div class="stat-value" id="p-win">0%</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">HEADSHOTS</div>
+                                <div class="stat-value" id="p-hs">0%</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">MECZE</div>
+                                <div class="stat-value" id="p-matches">0</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="text-muted small">STREAK</div>
+                                <div class="stat-value" id="p-streak">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="addToListBtn" class="btn btn-success w-100 mt-4 py-2 fw-bold">
+                        <i class="fa-solid fa-plus me-2"></i> DODAJ DO TABELI
+                    </button>
+                </div>
+
+                <div class="col-lg-5 d-flex align-items-center justify-content-center border-start border-secondary">
+                    <div style="width: 100%; height: 300px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-4 mb-5 border-0 shadow-sm" style="background: var(--card-bg);">
+            <div class="headerTable">
+                <i class="fa-solid fa-layer-group me-2"></i>
+                <h4>OBSERWOWANI GRACZE</h4>
+            </div>
+            <table id="compareTable" class="table table-dark table-hover align-middle w-100">
+                <thead>
+                    <tr class="text-secondary text-uppercase small">
+                        <th>Gracz</th>
+                        <th class="text-center">ELO</th>
+                        <th class="text-center">K/D</th>
+                        <th class="text-center">ADR</th>
+                        <th class="text-center">Winrate</th>
+                        <th class="text-end">Usuń</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
